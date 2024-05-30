@@ -5,7 +5,7 @@ from pathlib import Path
 from staticjinja import Site
 
 
-def get_context():
+def get_context() -> dict[str, str]:
     context = {}
     prefix = "SJP_"
     for key in os.environ.keys():
@@ -14,27 +14,27 @@ def get_context():
     return context
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Render HTML pages from Jinja2 new_templates"
+        description="Render HTML pages from Jinja2 templates",
     )
     parser.add_argument(
         "-w",
         "--watch",
         help="Render the site, and re-render on changes to <srcpath>",
-        action="store_true"
+        action="store_true",
     )
     parser.add_argument(
         "--srcpath",
-        help="The directory to look in for new_templates (defaults to './new_templates)'",
-        default=Path(".") / "new_templates",
-        type=Path
+        help="The directory to look in for templates (defaults to './templates)'",
+        default=Path(".") / "templates",
+        type=Path,
     )
     parser.add_argument(
         "--outpath",
         help="The directory to place rendered files in (defaults to './build')",
         default=Path(".") / "build",
-        type=Path
+        type=Path,
     )
 
     args = parser.parse_args()
@@ -46,8 +46,10 @@ def main():
     site = Site.make_site(
         searchpath=src_path,
         outpath=output_path,
-        staticpaths=[static_path],
-        contexts=[(".*.html", get_context)]
+        staticpaths=[
+            str(static_path),
+        ],
+        contexts=[(".*.html", get_context)],
     )
 
     site.render(use_reloader=args.watch)
