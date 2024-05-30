@@ -16,7 +16,7 @@ def get_context():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Render HTML pages from Jinja2 templates"
+        description="Render HTML pages from Jinja2 new_templates"
     )
     parser.add_argument(
         "-w",
@@ -26,8 +26,8 @@ def main():
     )
     parser.add_argument(
         "--srcpath",
-        help="The directory to look in for templates (defaults to './templates)'",
-        default=Path(".") / "templates",
+        help="The directory to look in for new_templates (defaults to './new_templates)'",
+        default=Path(".") / "new_templates",
         type=Path
     )
     parser.add_argument(
